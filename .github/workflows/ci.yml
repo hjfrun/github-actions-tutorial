@@ -1,5 +1,5 @@
 name: CI
-
+run-name: A CI demo
 on:
   push:
     branches:
