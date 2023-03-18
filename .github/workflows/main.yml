@@ -1,5 +1,5 @@
 name: Getting Started
-
+run-name: Can you run to get the env versions?
 on:
   push:
     branches: [main]
