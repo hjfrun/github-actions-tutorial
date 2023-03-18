@@ -1,0 +1,76 @@
+name: Setting Java Env
+run-name: Setup java in two envs
+on:
+  push:
+    branches: [ master ]
+    
+jobs:
+  build-on-windows:
+    runs-on: windows-latest
+    
+    steps:
+    
+      - name: Step 1 - Log the pre-build disc space
+        run: ls
+        
+      - name: Step 2 - Checkout the master Github branch
+        uses: actions/checkout@v3
+        
+      - name: Step 3 - Setup Java JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          distribution: 'temurin'
+          
+      - name: Step 4 - Build your Jakarta web app with Maven
+        run: echo mvn -B package --file pom.xml
+        
+      - name: Step 5 - Check Windows Execution Policy
+        run: |
+          echo Here is the Windows ExecutionPolicy:
+          Get-ExecutionPolicy
+          
+      - name: Step 6 - List Windows Environment Variables
+        run: env
+
+  # The second job in this workflow is named build-on-ubuntu
+  build-on-ubuntu:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Check out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Step 1 - Log the pre-build disc space
+        run: df
+        
+      - name: Step 2 - Checkout the master Github branch
+        uses: actions/checkout@v3
+        
+      - name: Step 3 - Setup Java JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          distribution: 'temurin'
+          
+      - name: Step 4 - Build your Jakarta web app with Maven
+        run: echo mvn -B package --file pom.xml
+        
+      - name: Step 5 - Build the native Android app
+        run: |
+          echo Here is the ANDROID_SDK_ROOT
+          echo $ANDROID_SDK_ROOT
+      
+      - name: Step 6 - Run your selenium tests
+        run: |
+          echo The SELENIUM_JAR_PATH
+          echo $SELENIUM_JAR_PATH
+          
+      - name: Step 7 - Log build tools versions
+        run: |
+          git --version
+          mvn --version
+          ant -version
+          gradle --version
+          
+      - name: Step 8 - Log the post-build dsc space
+        run: df
