@@ -1,0 +1,33 @@
+name: Getting Started
+
+on:
+  push:
+    branches: [main]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run a one-line script
+        run: echo Hello, World!
+        
+      - name: Run a multi-line script
+        run: |
+          echo What is in this directory?
+          ls -a
+          echo 
+          echo Is Java installed?
+          java -version
+          echo
+          echo Is Git installed?
+          git --version
+          echo What about the build tools?
+          mvn --version
+          gradle --version
+          ant -version
+          echo Is node installed?
+          node -v
+          echo And the npm version?
+          npm -v
