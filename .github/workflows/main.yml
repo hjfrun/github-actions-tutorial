@@ -23,6 +23,7 @@ jobs:
           echo
           echo 3. Is Git installed?
           git --version
+          echo
           echo 4. What about the build tools?
           mvn --version
           gradle --version
@@ -45,6 +46,7 @@ jobs:
           echo
           echo 10. What environment variables are available?
           env
+          echo
           echo 11. Is node installed?
           node -v
           echo
