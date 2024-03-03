@@ -21,6 +21,6 @@ jobs:
 
         - name: Check if branch is a feature branch
           run: echo "This is a feature branch"
-          if: contains(github.ref, 'feature')
+          if: contains(github.ref, 'feature/')
 
 
