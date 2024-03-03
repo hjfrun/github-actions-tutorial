@@ -8,4 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - run: echo "Deploying the basic workflow dispatch!!!"
+        - run: echo "${{github.ref_type}}"
+        - run: echo "${{github.ref_name}}"
 
