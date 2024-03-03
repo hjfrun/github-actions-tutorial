@@ -10,4 +10,9 @@ jobs:
         - run: echo "Deploying the basic workflow dispatch!!!"
         - run: echo "${{github.ref_type}}"
         - run: echo "${{github.ref_name}}"
+        - run: echo "${{github}}"
+        - run: echo "${{github.action}}"
+        - run: echo "${{github.action_path}}"
+        - run: echo "${{github.repository}}"
+        - run: echo "${{github.workflow}}"
 
