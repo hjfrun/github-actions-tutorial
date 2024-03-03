@@ -1,0 +1,31 @@
+name: Dynamic deployment by branch name
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-to-sandbox:
+    runs-on: ubuntu-latest
+    if: (github.ref_type == 'branch' && github.ref_name == 'master' && github.ref_type != 'tag')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.branch_name }}
+      - name: Deploy to sandbox
+        run: |
+          echo "Deploying to sandbox"
+          echo "Branch name: ${{ github.event.inputs.branch_name }}"
+
+  deploy-to-prod:
+    runs-on: ubuntu-latest
+    if: (github.ref_type == 'tag' && github.ref_type != 'branch' || contains(github.ref, 'feature/'))
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: Deploy to prod
+        run: |
+          echo "Deploying to prod"
+          echo "Tag: ${{ github.ref }}"
