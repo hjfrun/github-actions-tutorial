@@ -19,4 +19,8 @@ jobs:
         - run: echo "${{github.base_ref}}"
         - run: echo "Current branch is ${GITHUB_REF#refs/heads/}"
 
+        - name: Check if branch is a feature branch
+          run: echo "This is a feature branch"
+          if: contains(github.ref, 'feature')
+
 
