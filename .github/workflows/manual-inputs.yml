@@ -1,31 +1,39 @@
-name: CI
+name: Dynamic Deploy
 
 on:
   workflow_dispatch:
     inputs:
       environment:
-        type: environment
-        description: Select the environment
-      boolean:
-        type: boolean
-        description: True or False
-      choice:
         type: choice
-        description: Make a choice
+        description: Select a target environment to deploy
         options:
-        - foo
-        - bar
-        - baz
+        - Sandbox
+        - Production
+
 jobs:
-  build:
+  logs:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-
-      - name: greet
-        run: | 
-          echo "environment is ${{ github.event.inputs.environment }} / ${{ inputs.environment }}"
-          echo "boolean is ${{ github.event.inputs.boolean }}" / ${{ inputs.boolean }} 
-          echo "choice is ${{ github.event.inputs.choice }}" / ${{ inputs.choice }}
-          
+      - run: |
+          echo "Deploying to ${{github.event.inputs.environment}}"
+          echo "Branch name: ${{ github.ref_name }}"
+          echo "Tag: ${{ github.ref }}"
+  deploy-to-sandbox:
+    needs: logs
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.environment == 'Sandbox' }}
+    steps:
+      - run: |
+          echo "Deploying to Sandbox"
+          echo "Branch name: ${{ github.ref_name }}"
+          echo "Tag: ${{ github.ref }}"
+  
+  deploy-to-production:
+    needs: logs
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.environment == 'Production' }}
+    steps:
+      - run: |
+          echo "Deploying to Production"
+          echo "Branch name: ${{ github.ref_name }}"
+          echo "Tag: ${{ github.ref }}"
