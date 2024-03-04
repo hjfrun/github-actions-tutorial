@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       slot:
-        description: 'Deploy to slot'
+        description: 'Deploy to environment'
         required: true
         default: Sandbox
         type: choice
@@ -15,6 +15,13 @@ on:
           - Production
 
 jobs:
+  logs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Deploying to ${{github.event.inputs.slot}}"
+          echo "Branch name: ${{ github.ref_name }}"
+          echo "Tag: ${{ github.ref }}"
   deploy-to-sandbox:
     runs-on: ubuntu-latest
     if: (github.ref_type == 'branch' && github.ref_name == 'master')
