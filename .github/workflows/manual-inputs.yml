@@ -1,5 +1,7 @@
 name: Dynamic Deploy
 
+run-name: Deploy to environment - ${{github.event.inputs.environment}}
+
 on:
   workflow_dispatch:
     inputs:
@@ -21,19 +23,19 @@ jobs:
   deploy-to-sandbox:
     needs: logs
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.environment == 'Sandbox' }}
+    if: (github.ref_type == 'tag' && github.event.inputs.environment == 'Sandbox')
     steps:
       - run: |
-          echo "Deploying to Sandbox"
+          echo "Deploying to Sandbox : ${{github.event.inputs.environment}}"
           echo "Branch name: ${{ github.ref_name }}"
           echo "Tag: ${{ github.ref }}"
   
   deploy-to-production:
     needs: logs
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.environment == 'Production' }}
+    if: (github.ref_type == 'tag' && github.event.inputs.environment == 'Production')
     steps:
       - run: |
-          echo "Deploying to Production"
+          echo "Deploying to Production : ${{github.event.inputs.environment}}"
           echo "Branch name: ${{ github.ref_name }}"
           echo "Tag: ${{ github.ref }}"
