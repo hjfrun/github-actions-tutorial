@@ -1,0 +1,42 @@
+name: Deploy to env
+
+run-name: Deploy to env - ${{github.event.inputs.slot}}
+
+on:
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: 'Deploy to slot'
+        required: true
+        default: Sandbox
+        type: choice
+        options:
+          - Sandbox
+          - Production
+
+jobs:
+  deploy-to-sandbox:
+    runs-on: ubuntu-latest
+    if: (github.ref_type == 'branch' && github.ref_name == 'master')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref_name }}
+      - name: Deploy to sandbox
+        run: |
+          echo "Deploying to sandbox"
+          echo "Branch name: ${{ github.ref_name }}"
+
+  deploy-to-prod:
+    runs-on: ubuntu-latest
+    if: (github.ref_type == 'tag' || contains(github.ref, 'feature/'))
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: Deploy to prod
+        run: |
+          echo "Deploying to prod"
+          echo "Tag: ${{ github.ref }}"
