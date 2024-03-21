@@ -1,14 +1,13 @@
-name: Trigger the postman collection running
+name: Trigger the MTS Schema Validation QA Collection Running
 
 on:
   workflow_dispatch:
   workflow_call:
 
 jobs:
-  test-api:
+  API-Testing-and-Schema-Validation:
     runs-on: ubuntu-latest
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
    # INstall Node on the runner
@@ -17,7 +16,6 @@ jobs:
         with: 
             node-version: '18.x'
 
-    
     # Install the newman command line utility and also install the html extra reporter
       - name: Install newman
         run: |
