@@ -4,5 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  call-workflow-in-local-repo:
-    uses: ./.github/workflows/reusable-wf.yml
+  # call-workflow-in-local-repo:
+  #   uses: ./.github/workflows/reusable-wf.yml
+  MTS_Schema_Validation_QA:
+    uses: ./.github/workflows/postman-collections.yml
