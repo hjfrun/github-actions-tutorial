@@ -15,7 +15,6 @@ jobs:
         uses: actions/setup-node@v4
         with: 
             node-version: '18.x'
-            cache: npm
 
     # Install the newman command line utility and also install the html extra reporter
       - name: Install newman
