@@ -17,5 +17,5 @@ jobs:
       - name: Output current timestamp
         run: |
           timestamp=$(TZ=UTC-8 date +%Y%m%d_%H%M%S)
-          echo "With Time zone: $(timestamp)"
+          echo "With Time zone: ${timestamp}"
           echo "Current timestamp is $(date)"
